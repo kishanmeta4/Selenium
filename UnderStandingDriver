@@ -1,0 +1,42 @@
+package com.FirstSelenium;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
+
+public class UnderStandingDriver {
+	
+	public static void main(String[] args) {
+		
+		
+		
+		WebDriver driver = null;
+		
+		String  browserName="chrome";
+		
+		
+		switch(browserName.toLowerCase()) {
+		
+		case "chrome":
+		driver = new ChromeDriver();
+		break;
+		
+		case "fireFox":
+			driver = new FirefoxDriver();
+			break;
+			
+			default :System.out.println("Invalid BrowserName Provided");
+			
+			
+
+		}
+		
+		driver.get("https://www.google.com/");
+		
+		driver.quit();
+		
+		
+	}
+
+}
