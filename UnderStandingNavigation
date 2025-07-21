@@ -1,0 +1,58 @@
+package com.FirstSelenium;
+
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class UnderStandingNavigation {
+
+	public static void main(String[] args) throws InterruptedException {
+        // Set the path to the chromedriver executable if not set in system properties
+        // System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://the-internet.herokuapp.com/windows");
+
+        // Store the current window handle
+        String parentWindow = driver.getWindowHandle();
+
+        // Click the link that opens a new window
+        driver.findElement(By.linkText("Click Here")).click();
+
+        // Wait for the new window to open
+        Thread.sleep(2000);
+
+        // Get all window handles
+        Set<String> allWindows = driver.getWindowHandles();
+
+        // Switch to the new window
+        for (String windowHandle : allWindows) {
+            if (!windowHandle.equals(parentWindow)) {
+                driver.switchTo().window(windowHandle);
+                break;
+            }
+        }
+
+        // Perform actions in the new window
+        System.out.println("Child Window Title: " + driver.getTitle());
+
+        // Close the child window
+        driver.close();
+
+        // Switch back to the parent window
+        driver.switchTo().window(parentWindow);
+
+        // Perform actions in the parent window if needed
+        System.out.println("Parent Window Title: " + driver.getTitle());
+
+        // Close the parent window
+        driver.quit();
+    }
+}
+
+
+	
+
+
