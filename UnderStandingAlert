@@ -1,0 +1,70 @@
+package com.FirstSelenium;
+
+import java.time.Duration;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class UnderStandingAlert {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.get("https://demoqa.com/alerts");
+        driver.manage().window().maximize();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        WebElement button = driver.findElement(By.xpath("//button[@id='alertButton']"));
+        js.executeScript("arguments[0].scrollIntoView(true);", button);
+        wait.until(ExpectedConditions.elementToBeClickable(button));
+
+        button.click();
+
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        System.out.print(alert.getText());
+        alert.accept();
+
+        WebElement timeButton = driver.findElement(By.xpath("//button[@id='timerAlertButton']"));
+        wait.until(ExpectedConditions.elementToBeClickable(timeButton));
+
+        timeButton.click();
+
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert timerAlert = driver.switchTo().alert();
+        System.out.print(timerAlert.getText());
+        timerAlert.accept();
+
+        
+        
+        WebElement Confirmbutton = driver.findElement(By.xpath("//button[@id='confirmButton']"));
+        Confirmbutton.click();
+        
+        Alert ConfirmAlert = driver.switchTo().alert();
+        
+        System.out.println(ConfirmAlert.getText());
+        Thread.sleep(4000);
+        ConfirmAlert.accept();
+        
+        
+        WebElement promptButton = driver.findElement(By.id("promtButton"));
+        promptButton.click();
+
+        wait.until(ExpectedConditions.alertIsPresent());
+
+        Alert promptAlert = driver.switchTo().alert();
+        System.out.println("Prompt text: " + promptAlert.getText());
+        promptAlert.sendKeys("Kishan");
+        promptAlert.accept();
+
+        driver.quit();
+    }
+}
